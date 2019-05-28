@@ -8249,8 +8249,14 @@ jQuery.extend({
 			// Success/Error
 			if ( isSuccess ) {
 				deferred.resolveWith( callbackContext, [ success, statusText, jqXHR ] );
-			} else {
-				deferred.rejectWith( callbackContext, [ jqXHR, statusText, error ] );
+            } else {
+                var obj = JSON.parse(responses.text);
+                if (obj && obj.errorItems[0].Message) {
+                    deferred.rejectWith(callbackContext, [jqXHR, statusText, obj.errorItems[0].Message]);
+                }
+                else {
+                    deferred.rejectWith(callbackContext, [jqXHR, statusText, error]);
+                }
 			}
 
 			// Status-dependent callbacks

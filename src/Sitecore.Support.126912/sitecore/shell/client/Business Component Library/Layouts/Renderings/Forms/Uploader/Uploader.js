@@ -217,7 +217,7 @@ define(["sitecore", "jqueryui", "fileUpload", "iFrameTransport"], function (_sc,
     },
 
     setUploadUrl: function () {
-      this.url = "/sitecore/shell/api/sitecore/Media/Upload?database=" + this.databaseName;
+      this.url = "/sitecore/shell/api/sitecore/SupportMedia/Upload?database=" + this.databaseName;
       this.url += "&sc_content=" + this.databaseName;
       var destination = this.model.get("destinationUrl");
       if (destination !== null) {

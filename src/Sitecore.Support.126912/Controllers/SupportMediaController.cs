@@ -59,9 +59,10 @@ namespace Sitecore.Support.Controllers
                 Log.Error(e.Message, e, this);
 
                 var errorResult = new SitecoreViewModelResult();
+
                 errorResult.Result.errorItems = new List<ErrorItem>
                 {
-                    new ErrorItem("exception", string.Empty, TextsN.InternalServerError)
+                    new ErrorItem("exception", string.Empty, e.Message)
                 };
 
                 this.Response.StatusCode = new HttpStatusCodeResult(HttpStatusCode.NotFound).StatusCode;
@@ -113,7 +114,7 @@ namespace Sitecore.Support.Controllers
                 Log.Error(string.Format("Root item wasn't found at: {0}.", destinationUrl), result);
                 isValid = false;
             }
-            else if (!item.Access.CanCreate())
+            else if (!item.Access.CanCreate() || !item.Access.CanWrite())
             {
                 errorItems.Add(new ErrorItem("destination", destinationUrl, ClientHost.Globalization.Translate(TextsN.NoPermissionToUpload)));
                 Log.Error(string.Format(TextsN.NoPermissionToUpload + " {0}", destinationUrl), result);
